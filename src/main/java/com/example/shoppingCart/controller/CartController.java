@@ -27,9 +27,6 @@ public class CartController {
             cartService.addToCart(request);
     }
 
-    @PostMapping("/removeProduct")
-    public ResponseEntity<String> removeProductFromCart(@RequestBody ProductRequest request){
-        return cartService.removeProductFromCart(request);
-    }
+
 
 }
