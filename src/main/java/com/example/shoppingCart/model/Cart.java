@@ -26,8 +26,9 @@ public class Cart {
 
     double totalPrice;
 
+    String userId;
+
     Map<String, Integer> products = new HashMap<>();
 
-    @DBRef(lazy = true)
-    User user;
+
 }

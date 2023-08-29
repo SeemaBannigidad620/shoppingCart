@@ -22,11 +22,13 @@ public class ProductService {
 
     public ResponseEntity<String> createProduct(Product product) {
         try {
-            if (productRepository.existsByColourAndBrandAndCategory(product.getColour(), product.getBrand(), product.getCategory())) {
+            if (productRepository.existsByColourAndBrandAndCategory(product.getColour(), product.getBrand(),
+                    product.getCategory())) {
                 throw new DuplicateProductException(PRODUCT_ALREADY_EXISTS);
             }
             Product savedProduct = productRepository.save(product);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully with the Id" + savedProduct);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully with the Id" +
+                    savedProduct);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -41,7 +43,7 @@ public class ProductService {
             productRepository.deleteById(productId);
             return ResponseEntity.status(HttpStatus.OK).body("Product Removed Successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(PRODUCT_DOES_NOT_EXISTS);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 

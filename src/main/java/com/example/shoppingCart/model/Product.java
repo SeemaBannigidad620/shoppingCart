@@ -27,6 +27,6 @@ public class Product {
 
         String brand;
 
-        String Quantity;
+        int Quantity;
 
 }
