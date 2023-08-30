@@ -12,8 +12,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
-import static com.example.shoppingCart.constants.Constants.PRODUCT_ALREADY_EXISTS;
-import static com.example.shoppingCart.constants.Constants.PRODUCT_DOES_NOT_EXISTS;
+import static com.example.shoppingCart.constants.Constants.*;
 
 @Service
 public class ProductService {
@@ -22,9 +21,13 @@ public class ProductService {
 
     public ResponseEntity<String> createProduct(Product product) {
         try {
+            Product product1 = productRepository.findProductById(product.getId());
+            if (!ObjectUtils.isEmpty(product1)) {
+                throw new DuplicateProductException(PRODUCT_ALREADY_EXISTS + " " + "with the Id" + " " + product1.getId());
+            }
             if (productRepository.existsByColourAndBrandAndCategory(product.getColour(), product.getBrand(),
                     product.getCategory())) {
-                throw new DuplicateProductException(PRODUCT_ALREADY_EXISTS);
+                throw new DuplicateProductException(DUPLICATE_PRODUCT);
             }
             Product savedProduct = productRepository.save(product);
             return ResponseEntity.status(HttpStatus.CREATED).body("Product created successfully with the Id" +
@@ -48,7 +51,7 @@ public class ProductService {
     }
 
     public List<Product> fetchAllProducts() {
-       return productRepository.findAll();
+        return productRepository.findAll();
     }
 
     public Product findByID(int productId) {

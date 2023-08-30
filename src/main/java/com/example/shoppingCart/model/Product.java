@@ -27,6 +27,8 @@ public class Product {
 
         String brand;
 
-        int Quantity;
+        int quantity;
+
+        double shippingCharge;
 
 }
